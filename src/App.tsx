@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  Box,
+  ColorSchemeProvider,
+  DeviceTypeProvider,
+  IconButtonFloating,
+} from "gestalt";
+import "./App.css";
+import { KeyboardEvent, MouseEvent, useState } from "react";
+import Navigation from "./components/Navigation/Navigation";
+
+//declare a custom type
+type ThemeType = "light" | "dark" | "userPreference";
+type DeviceTypeType = "desktop" | "mobile";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [scheme, setScheme] = useState<ThemeType>("dark");
+  const [deviceType, setDeviceType] = useState<DeviceTypeType>("mobile");
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ColorSchemeProvider colorScheme={scheme} id="docsExample">
+      <DeviceTypeProvider deviceType={deviceType}>
+        <Navigation />
+        <Box
+          role="contentinfo"
+          position="fixed"
+          dangerouslySetInlineStyle={{
+            __style: {
+              right: "0%",
+              bottom: "0%",
+              transform: "translate(-30%, -30%)",
+            },
+          }}
+        >
+          <IconButtonFloating
+            accessibilityPopupRole={"dialog"}
+            accessibilityLabel={""}
+            icon={"add"}
+            onClick={() => {}}
+            tooltip={{
+              accessibilityLabel: undefined,
+              inline: undefined,
+              text: "",
+              zIndex: undefined,
+            }}
+          />
+        </Box>
+      </DeviceTypeProvider>
+    </ColorSchemeProvider>
+  );
 }
 
-export default App
+export default App;
